@@ -117,5 +117,12 @@ func TestHostitem(t *testing.T) {
 			t.Errorf("%s, expected %s, got %s", d.Domain, d.IP, ip)
 		}
 	}
+	for _, d := range testdata {
+		ht.Remove(d.Domain, d.IP, d.T)
+		ip := ht.get(d.Domain, d.T)
+		if ip != "" {
+			t.Errorf("%s, expected empty string, got %s", d.Domain, ip)
+		}
+	}
 	//fmt.Printf("%v\n", ht)
 }
