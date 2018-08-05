@@ -1,7 +1,10 @@
 gdns
 ====
 
-gdns is a dns proxy server
+gdns is a dns proxy server.
+I've shamelessly forked this from github.com/fangdingjun and added a few tweaks to:
+ 1) make it usable as a library and 
+ 1) support wildcard hosts (route *.foo.bar to a particular IP) 
 
 
 features
@@ -11,11 +14,9 @@ features
      different domains use different upstream server
 - support ip black list
 - support google https dns
+- support wildcard hosts 
 
 usage
 =====
     
-    go get github.com/fangdingjun/gdns
-    cp $GOPATH/src/github.com/fangdingjun/gdns/config_example.yaml config.yaml
-    vim config.yaml
-    $GOPATH/bin/gdns -c config.yaml
+    TODO

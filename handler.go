@@ -37,6 +37,7 @@ func NewDNSHandler(cfg *Conf) dns.Handler {
 func (h *DnsHandler) ServeDNS(w dns.ResponseWriter, r *dns.Msg) {
 	domain := r.Question[0].Name
 
+
 	if ok := h.answerFromHosts(w, r); ok {
 		return
 	}
@@ -160,6 +161,8 @@ func (h *DnsHandler) answerFromHosts(w dns.ResponseWriter, r *dns.Msg) bool {
 	domain := r.Question[0].Name
 	domain = strings.Trim(domain, ".") // Remove weird initial / trailing dots
 	t := r.Question[0].Qtype
+
+	log.Infof("request for %s %s", domain, t)
 
 	ip := h.cfg.Hosts.get(domain, int(t))
 	if ip != "" {
