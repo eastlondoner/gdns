@@ -5,7 +5,6 @@ import (
 	//"github.com/go-yaml/yaml"
 	//"io/ioutil"
 	"testing"
-	"sync"
 )
 
 func TestConf(t *testing.T) {
@@ -103,10 +102,7 @@ func TestItemAdd(t *testing.T) {
 }
 
 func TestHostitem(t *testing.T) {
-	ht := Hostitem{
-		lock: sync.Mutex{},
-		hosts:make(map[string][]Hostentry, 0),
-	}
+	ht := new(Hostitem)
 	testdata := []Hostentry{
 		{"www.google.com", "127.0.0.1", 1},
 		{"www.google.com", "127.0.0.2", 28},

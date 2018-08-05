@@ -69,10 +69,7 @@ func loadConfig(f string) (*Conf, error) {
 	}
 
 	if c.Hosts == nil {
-		c.Hosts = &Hostitem{
-			lock:  sync.Mutex{},
-			hosts: make(map[string][]Hostentry, 0),
-		}
+		c.Hosts = new(Hostitem)
 	}
 
 	if err := loadHostsFile(c.Hosts, c.HostFile); err != nil {
@@ -182,7 +179,8 @@ type Hostitem struct {
 	lock  sync.Mutex
 }
 
-func (ht Hostitem) get(domain string, t int) string {
+
+func (ht *Hostitem) get(domain string, t int) string {
 	if v, ok := ht.hosts[domain]; ok {
 		for _, v1 := range v {
 			if v1.Domain == domain && v1.T == t {
@@ -203,7 +201,7 @@ func (ht Hostitem) get(domain string, t int) string {
 	return ""
 }
 
-func (ht Hostitem) Add(domain, ip string, t int) {
+func (ht *Hostitem) Add(domain, ip string, t int) {
 	ht.lock.Lock()
 	defer ht.lock.Unlock()
 
@@ -228,7 +226,7 @@ func (ht Hostitem) Add(domain, ip string, t int) {
 	}
 }
 
-func (ht Hostitem) Remove(domain, ip string, t int) {
+func (ht *Hostitem) Remove(domain, ip string, t int) {
 	ht.lock.Lock()
 	defer ht.lock.Unlock()
 
