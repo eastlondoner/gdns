@@ -106,19 +106,12 @@ func loadHostsFile(h *Hostitem, f string) error {
 		s1 = strings.Trim(s1, " \t\r\n")
 		ss := strings.Split(s1, " ")
 
-		// ipv4
-		t := 1
-		if strings.Index(ss[0], ":") != -1 {
-			// ipv6
-			t = 28
-		}
-
 		for _, s2 := range ss[1:] {
 			if s2 == "" {
 				continue
 			}
 
-			h.Add(s2, ss[0], t)
+			h.Add(s2, ss[0])
 		}
 
 	}
@@ -201,7 +194,14 @@ func (ht *Hostitem) get(domain string, t int) string {
 	return ""
 }
 
-func (ht *Hostitem) Add(domain, ip string, t int) {
+func (ht *Hostitem) Add(domain, ip string) {
+	// ipv4
+	t := 1
+	if strings.Index(ip, ":") != -1 {
+		// ipv6
+		t = 28
+	}
+
 	ht.lock.Lock()
 	defer ht.lock.Unlock()
 
@@ -226,7 +226,14 @@ func (ht *Hostitem) Add(domain, ip string, t int) {
 	}
 }
 
-func (ht *Hostitem) Remove(domain, ip string, t int) {
+func (ht *Hostitem) Remove(domain, ip string) {
+	// ipv4
+	t := 1
+	if strings.Index(ip, ":") != -1 {
+		// ipv6
+		t = 28
+	}
+
 	ht.lock.Lock()
 	defer ht.lock.Unlock()
 

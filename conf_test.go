@@ -105,20 +105,20 @@ func TestHostitem(t *testing.T) {
 	ht := new(Hostitem)
 	testdata := []Hostentry{
 		{"www.google.com", "127.0.0.1", 1},
-		{"www.google.com", "127.0.0.2", 28},
-		{"www.example.org", "127.0.0.3", 28},
+		{"www.google.com", "127:0:0:2", 28},
+		{"www.example.org", "127:0:0:3", 28},
 		{"www.abc.org", "127.0.0.4", 1},
 	}
 
 	for _, d := range testdata {
-		ht.Add(d.Domain, d.IP, d.T)
+		ht.Add(d.Domain, d.IP)
 		ip := ht.get(d.Domain, d.T)
 		if ip != d.IP {
 			t.Errorf("%s, expected %s, got %s", d.Domain, d.IP, ip)
 		}
 	}
 	for _, d := range testdata {
-		ht.Remove(d.Domain, d.IP, d.T)
+		ht.Remove(d.Domain, d.IP)
 		ip := ht.get(d.Domain, d.T)
 		if ip != "" {
 			t.Errorf("%s, expected empty string, got %s", d.Domain, ip)
