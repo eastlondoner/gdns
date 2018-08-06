@@ -39,6 +39,7 @@ func (h *DnsHandler) ServeDNS(w dns.ResponseWriter, r *dns.Msg) {
 
 
 	if ok := h.answerFromHosts(w, r); ok {
+		log.Infof("Found in hosts")
 		return
 	}
 
@@ -48,9 +49,11 @@ func (h *DnsHandler) ServeDNS(w dns.ResponseWriter, r *dns.Msg) {
 	}
 
 	if msg, err := h.getAnswerFromUpstream(r, srvs); err == nil {
+		log.Infof("Found in upstream")
 		w.WriteMsg(msg)
 		return
 	}
+	log.Infof("Failed")
 
 	dns.HandleFailed(w, r)
 

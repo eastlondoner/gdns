@@ -185,7 +185,7 @@ func (ht *Hostitem) get(domain string, t int) string {
 	for host, v := range ht.hosts {
 		if strings.HasPrefix(host, "*") && strings.HasSuffix(domain, strings.TrimPrefix(host, "*")) {
 			for _, v1 := range v {
-				if v1.Domain == domain && v1.T == t {
+				if strings.HasSuffix(domain, strings.TrimPrefix(v1.Domain, "*")) && v1.T == t {
 					return v1.IP
 				}
 			}
